@@ -25,17 +25,34 @@ class BooksApp extends React.Component {
       this.setState({books: books})
     })
   }
+  onShelfChange = (book,shelf)=>{
+    BooksAPI.update(book,shelf).then(
+      this.setState((state)=>({
+        books: state.books.map(b => {
+          if(b.title === book.title){
+            b.shelf = shelf
+            return b
+          }else{
+            return b
+          }
+        })
+      
+      }))
+    )
+  };
   render() {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <SearchBooks showSearchPage={this.updateSearchPageState}/>
+          <SearchBooks showSearchPage={this.updateSearchPageState} 
+          currentBooks={this.state.books}
+          onShelfChange={this.onShelfChange}/>
         ) : (
           
           <div className="list-books">
             {/* //header.js */}
             <Header />
-           <Shelves library={this.state.books}/>
+           <Shelves library={this.state.books} onShelfChange={this.onShelfChange}/>
             {/* search button */}
             <SearchButton showSearchButton={this.updateSearchPageState}/>
           </div>

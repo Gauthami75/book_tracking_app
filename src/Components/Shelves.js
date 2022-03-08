@@ -4,15 +4,19 @@ class Shelves extends React.Component{
 
     render(){
       const BooksInShelf=this.props.library;
-      const CurrentlyReading= BooksInShelf.filter(book => book.shelf === 'curentlyReading');
+      const CurrentlyReading= BooksInShelf.filter(book => book.shelf === 'currentlyReading');
       const WantToRead = BooksInShelf.filter(book=> book.shelf==='wantToRead');
       const Read = BooksInShelf.filter(book=> book.shelf === 'read');
-      console.log(BooksInShelf);
+      const onShelfChange = this.props.onShelfChange;
+      //console.log(BooksInShelf);
         return(
-          <Shelf Books={CurrentlyReading}/>,
-          <Shelf Books={WantToRead}/>,
-          <Shelf Books={Read}/>
-
+          <div className="list-books-content">
+            <div>
+              <Shelf Books={CurrentlyReading} categories="Currently Reading" onShelfChange = {this.props.onShelfChange}/>,
+              <Shelf Books={WantToRead} categories="Want to Read" onShelfChange = {this.props.onShelfChange}/>,
+              <Shelf Books={Read} categories="Read" onShelfChange = {this.props.onShelfChange}/>
+          </div>
+          </div>
         )
     }
 }
